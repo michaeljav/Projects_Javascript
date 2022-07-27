@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <img
+      id="myImg"
+      src="img_snow.jpg"
+      alt="Snow"
+      style="width: 100%; max-width: 300px"
+    />
+    <!-- <img id="myImg" style="width: 100%; max-width: 300px" /> -->
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <span class="close">&times;</span>
+      <img class="modal-content" id="img01" />
+      <div id="caption"></div>
+    </div>
+
+    <input type="file" id="file-selector" />
+    <p id="status"></p>
+    <!-- <div style="background-color: yellow">
+      <p>Salida</p>
+      <img id="outputt" style="width: 100%; max-width: 300px" />
+    </div> -->
+
+    <script src="index.js"></script>
+
+    <!-- <button id="openImage" onclick="openImage()">Open Image</button> -->
+
+    <!-- <label for="">imagen1.jpeg</label> -->
+
+    <script>
+      const status = document.getElementById('status');
+      // const output = document.getElementById('outputt');
+      const output = document.getElementById('myImg');
+
+      // // function openImage() {
+      // //   alert('Hoila');
+      // // }
+
+      if (window.FileList && window.File && window.FileReader) {
+        document
+          .getElementById('file-selector')
+          .addEventListener('change', (event) => {
+            output.src = '';
+            status.textContent = '';
+            const file = event.target.files[0];
+            if (!file.type) {
+              status.textContent =
+                'Error: The File.type property does not appear to be supported on this browser.';
+              return;
+            }
+            if (!file.type.match('image.*')) {
+              status.textContent =
+                'Error: The selected file does not appear to be an image.';
+              return;
+            }
+            const reader = new FileReader();
+            reader.addEventListener('load', (event) => {
+              output.src = event.target.result;
+            });
+            reader.readAsDataURL(file);
+          });
+      }
+    </script>
+  </body>
+</html>
